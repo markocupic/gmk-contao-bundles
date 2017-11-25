@@ -1,0 +1,119 @@
+<?php if(\Environment::get('isAjaxRequest')): ?>
+    <?php foreach($this->items as $item): ?>
+    <li style="height:300px;" class="col-lg-3 col-md-4 col-sm-6 col-xs-12 item <?= $item['filterClasses'] ?>">
+        <div class="gmk_ref_box rotating-boxes-item">
+            <div class="gmk_ref_front rotating-boxes-item-cover">    
+                <!--<h4><?= $item['name'] ?></h4>-->
+                <img src="<?= $item['src'] ?>" alt="<?= $item['alt'] ?>">
+                <?php if($item['hasCase']): ?>
+                <a href="<?= $item['jumpTo'] ?>">Zum Case<i class="btr bt-angle-right"></i></a>
+                <?php endif; ?>
+            </div>
+            <div class="rotating-boxes-item-content gmk_ref_back">
+                <h4><?= $item['name'] ?></h4>
+                <h5>Branche(n):</h5>
+                <p class="gmk_ref_branche"><?= $item['strBranchen'] ?></p>
+                <h5>Leistungsfeld(er):</h5>
+                <p class="gmk_ref_leistung"><?= $item['strLeistungsfelder'] ?></p>
+                <?php if($item['hasCase']): ?>
+                <a href="<?= $item['jumpTo'] ?>">Zum Case<i class="btr bt-angle-right"></i></a>
+                <?php endif; ?>
+            </div>    
+        </div>
+    </li>
+    <?php endforeach; ?>
+<?php else: ?>
+<?php if ($this->ids != ''): ?>
+<script>
+
+    (function ($) {
+        $(document).ready(function () {
+
+            var ids = <?= $this->ids ?>;
+
+            /**
+             * Generate the NewsInfiniteScroll object
+             * requires referenzen_infinite_scroll.js
+             * @type {NewsInfiniteScroll}
+             */
+            var referenzenInfiniteScroll = new ReferenzenInfiniteScroll({
+                // Array with news-ids
+                ids: ids,
+                // CSS selector: Append loaded items to this container
+                newsContainer: '.gmk_ref',
+                // CSS selector: Default to $(window)
+                scrollContainer: $(window),
+                // When set to true, this will disable infinite scrolling and start firing ajax requests on domready with an interval of 3s
+                loadAllOnDomready: true,
+                // Load x items per request
+                itemsPerRequest: 24,
+                // CSS selector: When you scroll and the window has reached the anchor point, requests will start
+                anchorPoint: '.gmk_ref',
+                // Distance in px from the top of the anchorPoint
+                bottomPixels: 1600,
+                // Integer: Fading time for loades news items
+                fadeInTime: 0,
+                // HTML: Show this message during the loading process
+                msgText: '<em>Lade weitere Referenzen</em>',
+
+
+                // Callbacks
+                /**
+                 *
+                 * @param instance
+                 */
+                onInitialize: function (instance) {
+                    $('.gmk_ref').addClass('row');
+                    $('.gmk_ref > div').addClass('col-lg-3 col-md-4 col-sm-6 col-xs-12');
+                },
+
+                /**
+                 *
+                 * @param instance
+                 */
+                onXHRStart: function (instance) {
+                    //
+                },
+
+                /**
+                 *
+                 * @param html
+                 * @param instance
+                 * @returns string
+                 */
+                onXHRComplete: function (html, instance) {
+                    return html;
+                },
+
+                /**
+                 *
+                 * @param instance
+                 */
+                onXHRFail: function (instance) {
+                    console.log('Keine Antwort vom Server mit der Adresse: ' + instance.currentUrl);
+                },
+
+                /**
+                 *
+                 * @param instance
+                 */
+                onAppendCallback: function (instance) {
+                    // Remove and add css classes to loaded items
+                    var articles = $('.gmk_ref > li');
+                    articles.removeClass('first last odd even');
+                    articles.first().addClass('first');
+                    articles.last().addClass('last');
+                    $('.gmk_ref  > li:even').addClass('even');
+                    $('.gmk_ref  > li:odd').addClass('odd');
+                    // Bootstrap grid settings
+                    $('.gmk_ref  > li').addClass('col-lg-3 col-md-4 col-sm-6 col-xs-12');
+                }
+            });
+        });
+    }(jQuery));
+
+
+</script>
+<?php endif; ?>
+<?php endif; ?>
+

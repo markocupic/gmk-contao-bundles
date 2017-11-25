@@ -1,0 +1,136 @@
+<?php
+        // Bootstrap
+        //$GLOBALS['TL_CSS'][] = 'files/mcupic/bootstrap/css/bootstrap.css|static';
+        //$GLOBALS['TL_JAVASCRIPT'][] = 'files/mcupic/bootstrap/js/bootstrap.js|static';
+        // Slick
+        $GLOBALS['TL_HEAD'][] = '<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/jquery.slick/1.6.0/slick.css"/>';
+        $GLOBALS['TL_HEAD'][] = '<script type="text/javascript" src="//cdn.jsdelivr.net/jquery.slick/1.6.0/slick.min.js"></script>';
+        // My stlesheet
+        $GLOBALS['TL_CSS'][] = 'files/mcupic/stylesheet.css|static';
+?>
+
+
+
+<?php $this->extend('block_searchable'); ?>
+<?php $this->block('content'); ?>
+
+<div class="row">
+<?php foreach($this->rows as $row): ?>
+    <div class="col-lg-3 col-md-4 col-sm-6">
+        <div class="gmk-employee-list-card">
+            <figure class="gmk-employee-list-card-image-container image_container" data-toggle="modal" data-target="#gmkEmployeeModal_<?= $row['id'] ?>">
+                {{picture::<?= $row['singleSRC'] ?>?size=2&alt=<?= $row['firstname'] ?> <?= $row['lastname'] ?>}}
+                <div class="portfolio-overlay">
+                    <span>
+                        <img src="files/krea_layout/icons/gmk_icon_brandguide_ho.svg" alt="GMK Brandguide">
+                    </span>
+                </div>
+            </figure>
+            <div class="gmk-employee-list-info">
+            <div class="gmk-employee-list-card-function"><?= $row['funktion'] ?>.&nbsp;</div>
+            <div class="gmk-employee-list-card-name" data-toggle="modal" data-target="#gmkEmployeeModal_<?= $row['id'] ?>"><?= $row['firstname'] ?><br><?= $row['lastname'] ?>.</div>
+            </div>
+        </div>
+    </div>
+<?php endforeach; ?>
+</div><!-- endrow-->
+
+<script>
+// Requires Bootstrap Modal
+// Requires Slick Carousel
+(function($) {
+     $(document).ready(function(e) {
+        //Prevent jQuery events from firing multiple times
+        $('#gmkEmployeeModalContainer_<?= $this->id ?> .gmk-employee-modal').each(function( index ) {
+            jQuery(jQuery(this).detach()).appendTo("body");
+            $(this).find('.gmkEmployeeModalSlick').css('opacity', 0);
+
+            $(this).on('shown.bs.modal', function (e) {
+                $(this).find('.gmkEmployeeModalSlick').on('init', function(){
+                    setTimeout(function(){$('.gmkEmployeeModalSlick').css('opacity', 1);},800);
+                });
+                $(this).find('.gmkEmployeeModalSlick').slick({
+                    // Options https://github.com/kenwheeler/slick
+                    dots: true,
+                    infinite: true,
+                    speed: 500,
+                    customPaging : function(slider, i) {
+                        //var thumb = $(slider.$slides[i]).data('thumb');
+                        return '<p class="slick-custom-dots"> </p>';
+                    },
+                });
+            });
+
+            $(this).on('hidden.bs.modal', function (e) {
+                $(this).find('.gmkEmployeeModalSlick').css('opacity', 0);
+                $(this).find('.gmkEmployeeModalSlick').slick('unslick');
+            });
+        });
+    });
+})(jQuery);
+</script>
+
+
+
+<!-- Modal Box Container -->
+<div id="gmkEmployeeModalContainer_<?= $this->id ?>">
+    <?php foreach($this->rows as $row): ?>
+    <div id="gmkEmployeeModal_<?= $row['id'] ?>" class="gmk-employee-modal modal fade" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="gmk-modal-close" onclick="jQuery(this).closest('.modal').modal('toggle');"><i class="btr bt-times"></i></div>
+                <div class="row">
+                    <div class="col-md-6 col-one">
+                        <div class="gmk-employee-modal-card">
+                            <figure class="gmk-employee-modal-card-image-container image_container">
+                                {{picture::<?= $row['singleSRC'] ?>?size=2&alt=<?= $row['firstname'] ?> <?= $row['lastname'] ?>}}
+                            </figure>
+                            <div class="gmk-employee-modal-left">
+                                <?php if($row['funktion'] != ''): ?>
+                                <span><?= $row['funktion'] ?>.</span>
+                                <?php endif; ?>
+                                <h3 class="gmk-employee-modal-card-name"><?= $row['firstname'] ?> <?= $row['lastname'] ?>.</h3>
+                                <?php if($row['phone'] != '' || $row['email'] != ''): ?>
+                                <div class="gmk-employee-modal-card-contact-info">Kontaktieren Sie unseren Brand Guide <?= $row['firstname'] ?> <?= $row['lastname'] ?> pers&ouml;nlich!</div>
+                                <?php endif; ?>
+                                <?php if($row['phone'] != ''): ?>
+                                <div class="gmk-employee-modal-card-phone"><i class="btr bt-phone"></i><?= $row['phone'] ?></div>
+                                <?php endif; ?>
+                                <?php if($row['email'] != ''): ?>
+                                <div class="gmk-employee-modal-card-contact-email"><i class="btr bt-envelope"></i><?= $row['email'] ?></div>
+                                <?php endif; ?>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-two">
+                        <!-- Wrapper for slides -->
+                        <div class="gmkEmployeeModalSlick" role="listbox" style="">
+                            <?php if($row['description'] != ''): ?>
+                            <div class="gmk-employee-modal-card-slide-item-description-box">
+                                <div class="gmk-employee-modal-card-slide-item-description-box-info">Info.</div>
+                                <div class="gmk-employee-modal-card-slide-item-description-box-person">Zur Person.</div>
+                                <div class="gmk-employee-modal-card-slide-item-description-box-description"><?= nl2br($row['description']) ?></div>
+                            </div>
+                            <?php endif; ?>
+                            <?php foreach($row['interview'] as $item): ?>
+                            <div class="gmk-employee-modal-card-slide-item-interview">
+                                <div class="gmk-employee-modal-card-slide-item-interview-question"><span>Persönliche Brand Guide Fragen.</span><?= $item['interview_question'] ?></div>
+                                <div class="gmk-employee-modal-card-slide-item-answer"><?= $item['interview_answer'] ?></div>
+                            </div>
+                            <?php endforeach; ?>
+                            <?php if($row['publications'] != ''): ?>
+                            <div class="gmk-employee-modal-card-slide-item-description-box">
+                                
+                                <div class="gmk-employee-modal-card-slide-item-publication-text"><?= \Controller::replaceInsertTags($row['publications']) ?></div>
+                            </div>
+                            <?php endif; ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <?php endforeach; ?>
+</div>
+<?php $this->endblock(); ?>

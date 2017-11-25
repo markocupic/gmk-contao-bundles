@@ -1,0 +1,9 @@
+<div <?= $this->cssID ?>class="<?= $this->class ?>" <?php if ($this->style): ?> style="<?= $this->style ?>"<?php endif; ?>>
+  <a class="gmk_archivlink" href="{{news_url::<?= $this->id ?>}}">
+    <p class="info"><?php
+        $archive = \NewsArchiveModel::findByPk($this->pid);
+        echo $archive->title;
+        ?></p>
+    <h3><?= $this->headline ?></h3>
+  </a>
+</div>

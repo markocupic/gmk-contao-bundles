@@ -1,0 +1,177 @@
+<?php $this->extend('block_searchable'); ?>
+<?php $this->block('content'); ?>
+
+<!--
+<img src="<?= $this->icon ?>" width="18" height="18" alt="<?= $this->mime ?>" class="mime_icon">
+-->
+
+<img src="files/krea_layout/img/gmk_down.svg" width="30" height="30" alt="GMK Download">
+<a href="<?= $this->href ?>" data-id="<?= $this->id ?>" data-auth="<?= $this->auth ?>" title="<?= $this->title ?>">
+    <?= $this->link ?> <span class="size">(<?= $this->filesize ?>)</span>
+</a>
+
+
+<?php if (TL_MODE == 'FE'): ?>
+<script>
+
+    function loadjQuery(e, t) {
+        var n = document.createElement("script");
+        n.setAttribute("src", e);
+        n.onload = t;
+        n.onreadystatechange = function () {
+            if (this.readyState == "complete" || this.readyState == "loaded") t()
+        };
+        document.getElementsByTagName("head")[0].appendChild(n)
+    }
+
+    function main() {
+        var $cr = jQuery.noConflict();
+        var old_src;
+        $cr(document).ready(function () {
+            $cr(".cr_form").submit(function () {
+
+                $cr(this).find('.clever_form_error').removeClass('clever_form_error');
+                $cr(this).find('.clever_form_note').remove();
+                $cr(this).find(".musthave").find('input, textarea').each(function () {
+                    if (jQuery.trim($cr(this).val()) == "" || ($cr(this).is(':checkbox')) || ($cr(this).is(':radio'))) {
+                        if ($cr(this).is(':checkbox') || ($cr(this).is(':radio'))) {
+                            if (!$cr(this).parent().find(":checked").is(":checked")) {
+                                $cr(this).parent().addClass('clever_form_error');
+                            }
+                        } else {
+                            $cr(this).addClass('clever_form_error');
+                        }
+                    }
+                });
+                if ($cr(this).attr("action").search(document.domain) > 0 && $cr(".cr_form").attr("action").search("wcs") > 0) {
+                    var cr_email = $cr(this).find('input[name=email]');
+                    var unsub = false;
+                    if ($cr("input['name=cr_subunsubscribe'][value='false']").length) {
+                        if ($cr("input['name=cr_subunsubscribe'][value='false']").is(":checked")) {
+                            unsub = true;
+                        }
+                    }
+                    if (cr_email.val() && !unsub) {
+                        $cr.ajax({
+                            type: "GET", url: $cr(".cr_form").attr("action").replace("wcs", "check_email") + $cr(this).find('input[name=email]').val(), success: function (data) {
+                                if (data) {
+                                    cr_email.addClass('clever_form_error').before("<div class='clever_form_note cr_font'>" + data + "</div>");
+                                    return false;
+                                }
+                            }, async: false
+                        })
+                    }
+                    var cr_captcha = $cr(this).find('input[name=captcha]');
+                    if (cr_captcha.val()) {
+                        $cr.ajax({
+                            type: "GET", url: $cr(".cr_form").attr("action").replace("wcs", "check_captcha") + $cr(this).find('input[name=captcha]').val(), success: function (data) {
+                                if (data) {
+                                    cr_captcha.addClass('clever_form_error').after("<div style='display:block' class='clever_form_note cr_font'>" + data + "</div>");
+                                    return false;
+                                }
+                            }, async: false
+                        })
+                    }
+                }
+                if ($cr(this).find('.clever_form_error').length) {
+                    return false;
+                }
+                return true;
+                if (isNaN($cr(this).val())) {
+                    $cr(this).val(1);
+                }
+                if ($cr(this).attr("min")) {
+                    if (($cr(this).val() * 1) < ($cr(this).attr("min") * 1)) {
+                        $cr(this).val($cr(this).attr("min"));
+                    }
+                }
+                if ($cr(this).attr("max")) {
+                    if (($cr(this).val() * 1) > ($cr(this).attr("max") * 1)) {
+                        $cr(this).val($cr(this).attr("max"));
+                    }
+                }
+            });
+            old_src = $cr("div[rel='captcha'] img:not(.captcha2_reload)").attr("src");
+            if ($cr("div[rel='captcha'] img:not(.captcha2_reload)").length != 0) {
+                captcha_reload();
+            }
+        });
+        function captcha_reload() {
+            var timestamp = new Date().getTime();
+            $cr("div[rel='captcha'] img:not(.captcha2_reload)").attr("src", "");
+            $cr("div[rel='captcha'] img:not(.captcha2_reload)").attr("src", old_src + "?t=" + timestamp);
+            return false
+        }
+
+    }
+
+    if (typeof jQuery === "undefined") {
+        loadjQuery("//ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js", main)
+    } else {
+        main()
+    }
+</script>
+<!-- Modal -->
+<div class="gmk-download-modal" data-id="<?= $this->id ?>" role="dialog" aria-hidden="true" data-dismiss="gmk-download-modal">
+    <div class="gmk-download-modal-dialog" role="document">
+        <button type="button" class="gmk-download-modal-close" data-dismiss="gmk-download-modal" title="<?= $this->closeLayer ?>" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        <div class="gmk-download-modal-content">
+            <div class="gmk-download-modal-header">
+                <h3 class="gmk-download-modal-title">
+                    <!--<?= $this->gmkDownloadModalTitle ?>-->
+                    Für den kostenlosen Download bitten wir Sie nur noch um die Angabe Ihrer E-Mail Adresse
+                    </h3>
+            </div>
+            <div class="gmk-download-modal-body">
+                <form class="layout_form cr_form cr_font" action="http://seu1.cleverreach.com/f/61278-175376/wcs/" method="post" target="_blank">
+                    <div class="cr_body cr_page cr_font formbox">
+                        <div class='non_sortable' style='text-align:left;'>
+
+                        </div>
+
+                        <div class='editable_content' style='text-align:left;'>
+
+                            <div class="row">
+                                <div id="3657267" rel="email" class="cr_ipe_item ui-sortable musthave col-lg-8">
+
+                                    <label for="text3657267" class="itemname">E-Mail*</label> <input id="text3657267" name="email" value="" type="text" style="width:100%;" />
+
+                                </div>
+
+                                <div id="3907750" rel="button" class="cr_ipe_item ui-sortable submit_container col-lg-4">
+
+                                    <button type="submit" class="cr_button gmk_button_green gmk-download-modal-submit-button" style="margin-top: 31px; float:none;">Download</button>
+                                </div>
+                            </div><!-- row -->
+                        </div>
+
+
+                    </div>
+
+                </form>
+
+                <div class="gmk-download-modal-file-link" style="display:none">
+                    <a href="<?= $this->href ?>" onclick="location.href=jQuery(this).attr('href')" data-id="<?= $this->id ?>" data-auth="<?= $this->auth ?>" title="<?= $this->title ?>">
+                    <?= $this->link ?> <span class="size">(<?= $this->filesize ?>)</span>
+                </a>
+                </div>
+                <div class="gmk-download-response-message"></div>
+            </div>
+            <!--
+            <div class="gmk-download-modal-footer">
+                <button type="button" class="gmk-download-modal-close-button" data-dismiss="gmk-download-modal">Schliessen</button>
+                <!--<button type="button" class="gmk-download-modal-submit-button">Senden</button>
+            </div>
+            -->
+            
+        </div>
+    </div>
+</div>
+<!-- end Modal -->
+<?php endif; ?>
+
+
+
+<?php $this->endblock(); ?>
