@@ -1,11 +1,3 @@
-# calendar-event-booking-bundle
-Mit dieser Contao 4 Erweiterung werden Events buchbar. Die Extension erweitert die Tabelle tl_calendar_events um weitere Felder und erstellt eine zusätzliche Kindtabelle zu tl_calendar_events um die Anmeldungen der gebuchten Events zu speichern.
-
-Mit einem Frontend Modul lässt sich auf einer Event-Reader Seite ein Anmeldeformular einblenden.
-Wichtig! Das Anmeldeformular zieht den Eventnamen aus der Url. Der Event-Alias oder die Event-Id muss deshalb zwingender Bestandteil der Url sein.
-
-Zu jedem Event lassen sich zusätzlich im Backend die Event Teilnehmer einsehen und als csv-Datei downloaden.
-
 ## Contao Bundle lokal und nicht von packagist oder einem anderen Repository laden
 Möchte man das Bundle aus einer lokalen Quelle laden und dann unter `contao/managed-edition` laufen lassen, sind folgende Schritte notwendig:
 Erstellen der globale ContaoManagerPlugin Klasse, welche in einem Symfony App nur einmal vorkommt und im Verzeichnis `app/` angesiedelt sein sollte.
