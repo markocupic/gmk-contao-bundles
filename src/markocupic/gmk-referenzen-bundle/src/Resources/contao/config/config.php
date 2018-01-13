@@ -36,6 +36,6 @@ $GLOBALS['TL_CTE']['gmk_referenzen'] = array(
 if (TL_MODE == 'FE' && !\Environment::get('isAjaxRequest'))
 {
 
-    $GLOBALS['TL_JAVASCRIPT'][] = 'bundles/markocupicgmkreferenzen/js/referenzen_infinite_scroll.js';
+    $GLOBALS['TL_JAVASCRIPT'][] = 'bundles/markocupicgmkreferenzen/js/referenzen_infinite_scroll.js|static';
 
 }

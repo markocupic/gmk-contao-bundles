@@ -44,6 +44,12 @@ class GmkReferenzenListInfiniteScroll extends \ContentElement
             $objPage->cache = 0;
         }
 
+        // Add custom template
+        if ($this->referenzenListInfiniteScrollTpl != '')
+        {
+            $this->strTemplate = $this->referenzenListInfiniteScrollTpl;
+        }
+
         return parent::generate();
 
     }

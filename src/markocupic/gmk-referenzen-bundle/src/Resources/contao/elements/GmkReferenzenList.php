@@ -33,6 +33,13 @@ class GmkReferenzenList extends \ContentElement
 
             return $objTemplate->parse();
         }
+
+        // Add custom template
+        if ($this->referenzenListTpl != '')
+        {
+            $this->strTemplate = $this->referenzenListTpl;
+        }
+
         return parent::generate();
 
     }

@@ -5,7 +5,7 @@
         // Slick
         $GLOBALS['TL_HEAD'][] = '<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/jquery.slick/1.6.0/slick.css"/>';
         $GLOBALS['TL_HEAD'][] = '<script type="text/javascript" src="//cdn.jsdelivr.net/jquery.slick/1.6.0/slick.min.js"></script>';
-        // My stlesheet
+        // My stylesheet
         $GLOBALS['TL_CSS'][] = 'files/mcupic/stylesheet.css|static';
 ?>
 

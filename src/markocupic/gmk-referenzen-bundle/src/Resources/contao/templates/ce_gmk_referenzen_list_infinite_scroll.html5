@@ -63,7 +63,7 @@
                  * @param instance
                  */
                 onInitialize: function (instance) {
-                    $('.gmk_ref').addClass('row');
+                    //$('.gmk_ref').addClass('row');
                     $('.gmk_ref > div').addClass('col-lg-3 col-md-4 col-sm-6 col-xs-12');
                 },
 
