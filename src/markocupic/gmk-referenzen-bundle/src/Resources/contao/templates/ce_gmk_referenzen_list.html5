@@ -1,9 +1,9 @@
 <?php $this->extend('block_searchable'); ?>
 <?php $this->block('content'); ?>
-
-<ul class="gmk_ref row rotating-boxes">
+<div class="row">
+<ul class="gmk_ref rotating-boxes">
     <?php foreach($this->items as $item): ?>
-    <li style="height:300px;" class="col-lg-3 col-md-4 col-sm-6 col-xs-12 item <?= $item['filterClasses'] ?>">
+    <li style="height:300px;" class="col-xl-3 col-lg-4 col-md-6 col-sm-12 item <?= $item['filterClasses'] ?>">
         <div class="gmk_ref_box rotating-boxes-item">
             <div class="gmk_ref_front rotating-boxes-item-cover">
                 <!--<h4><?= $item['name'] ?></h4>-->
@@ -26,6 +26,7 @@
     </li>
     <?php endforeach; ?>
 </ul>
+</div> 
 <?php $this->endblock(); ?>
 
 

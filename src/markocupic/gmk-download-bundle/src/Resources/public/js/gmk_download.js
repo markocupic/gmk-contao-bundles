@@ -49,18 +49,16 @@
                     e.stopPropagation();
 
 
-
-
                     // Define the vars
                     GmkDownload.link = $(this);
                     GmkDownload.href = $(GmkDownload.link).attr('href');
                     GmkDownload.id = $(GmkDownload.link).attr('data-id');
-                    GmkDownload.backdrop = $('.gmk-download-modal[data-id="'+ GmkDownload.id +'"]');
+                    GmkDownload.backdrop = $('.gmk-download-modal[data-id="' + GmkDownload.id + '"]');
                     GmkDownload.elSubmit = $(GmkDownload.backdrop).find('button.gmk-download-modal-submit-button');
                     GmkDownload.elMessage = $('.gmk-download-response-message');
 
                     // Insert Modal to specific place in the DOM
-                    GmkDownload.backdrop.detach().insertAfter('#contentwrapper');
+                    GmkDownload.backdrop.detach().appendTo('body');
 
                     // Reset
                     GmkDownload.resetForm();
@@ -87,7 +85,7 @@
                             email: emailAddress,
                             id: GmkDownload.id
                         }).done(function (data) {
-                            console.log(data);
+                            //console.log(data);
                             if (data.status == 'success') {
                                 $(GmkDownload.elMessage).html(data.message);
                                 window.setTimeout(function () {

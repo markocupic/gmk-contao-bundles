@@ -93,11 +93,15 @@
         //Prevent jQuery events from firing multiple times
         $('#gmkEmployeeModalContainer_<?= $this->id ?> .gmk-employee-modal').each(function( index ) {
             jQuery(jQuery(this).detach()).appendTo("body");
-            $(this).find('.gmkEmployeeModalSlick').css('opacity', 0);
+            $('.modal-content').css('opacity', 0);
 
             $(this).on('shown.bs.modal', function (e) {
                 $(this).find('.gmkEmployeeModalSlick').on('init', function(){
-                    setTimeout(function(){$('.gmkEmployeeModalSlick').css('opacity', 1);},800);
+                    //$('.modal-content').hide();
+                    setTimeout(function(){
+                        $('.modal-content').css('opacity', 1);
+                        //$('.modal-content').show(400);
+                    },100);
                 });
                 $(this).find('.gmkEmployeeModalSlick').slick({
                     // Options https://github.com/kenwheeler/slick
@@ -112,8 +116,8 @@
             });
 
             $(this).on('hidden.bs.modal', function (e) {
-                $(this).find('.gmkEmployeeModalSlick').css('opacity', 0);
-                $(this).find('.gmkEmployeeModalSlick').slick('unslick');
+                $('.modal-content').css('opacity', 0);
+                $('.gmkEmployeeModalSlick').slick('unslick');
             });
         });
     });

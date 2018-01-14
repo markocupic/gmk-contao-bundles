@@ -21,6 +21,6 @@ $GLOBALS['PW_DOWNLOAD']['cookie_lifetime'] = 30*24*60*60;
 
 if (TL_MODE == 'FE')
 {
-       $GLOBALS['TL_JAVASCRIPT'][] = 'bundles/markocupicgmkdownload/js/gmk_download.js|static';
+       $GLOBALS['TL_JAVASCRIPT'][] = 'bundles/markocupicgmkdownload/js/gmk_download.js';
        $GLOBALS['TL_CSS'][] = 'bundles/markocupicgmkdownload/css/gmk_download.css|static';
 }

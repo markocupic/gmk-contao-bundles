@@ -106,11 +106,16 @@
     }
 
     if (typeof jQuery === "undefined") {
-        loadjQuery("//ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js", main)
+        loadjQuery("//code.jquery.com/jquery-1.12.4.min.js", main)
     } else {
         main()
     }
 </script>
+
+
+
+
+
 <!-- Modal -->
 <div class="gmk-download-modal" data-id="<?= $this->id ?>" role="dialog" aria-hidden="true" data-dismiss="gmk-download-modal">
     <div class="gmk-download-modal-dialog" role="document">
