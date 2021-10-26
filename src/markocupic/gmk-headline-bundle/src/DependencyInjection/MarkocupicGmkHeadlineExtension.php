@@ -10,10 +10,10 @@ use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 
 
 /**
- * Class MarkocupicGmkHeadlinekExtension
+ * Class MarkocupicGmkHeadlineExtension
  * @package Markocupic\GmkHeadlineBundle\DependencyInjection
  */
-class MarkocupicGmkHeadlinekExtension extends Extension
+class MarkocupicGmkHeadlineExtension extends Extension
 {
     /**
      * {@inheritdoc}
