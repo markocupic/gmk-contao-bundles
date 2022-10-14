@@ -15,6 +15,8 @@ declare(strict_types=1);
 use Contao\Config;
 use Contao\DataContainer;
 use Contao\DC_Table;
+use Contao\Image;
+use Contao\StringUtil;
 
 $GLOBALS['TL_DCA']['tl_gmk_referenzen'] = [
     'config'      => [
@@ -70,9 +72,9 @@ $GLOBALS['TL_DCA']['tl_gmk_referenzen'] = [
                 'attributes' => 'onclick="if(!confirm(\''.($GLOBALS['TL_LANG']['MSC']['deleteConfirm'] ?? null).'\'))return false;Backend.getScrollOffset()"',
             ],
             'toggle' => [
-                'icon'            => 'visible.gif',
-                'attributes'      => 'onclick="Backend.getScrollOffset();return AjaxRequest.toggleVisibility(this,%s)"',
-                'button_callback' => ['tl_gmk_referenzen', 'toggleIcon'],
+                'href'    => 'act=toggle&amp;field=published',
+                'icon'    => 'visible.svg',
+                'reverse' => false,
             ],
             'show'   => [
                 'href' => 'act=show',
@@ -107,6 +109,7 @@ $GLOBALS['TL_DCA']['tl_gmk_referenzen'] = [
             'sql' => "int(10) unsigned NOT NULL default '0'",
         ],
         'published'       => [
+            'toggle'    => true,
             'exclude'   => true,
             'inputType' => 'checkbox',
             'eval'      => ['mandatory' => false],
@@ -208,3 +211,50 @@ $GLOBALS['TL_DCA']['tl_gmk_referenzen'] = [
         ],
     ],
 ];
+
+class tl_gmk_referenzen extends Backend
+{
+
+    /**
+     * Import the back end user object
+     */
+    public function __construct()
+    {
+        parent::__construct();
+        $this->import('BackendUser', 'User');
+    }
+
+    /**
+     * Pid has to be allways 0
+     */
+    public function setPid()
+    {
+        $this->Database->prepare('UPDATE tl_gmk_referenzen SET pid=?')->execute(0);
+    }
+
+    /**
+     * Prevent that an item obtains a pid > 0
+     * https://community.contao.org/de/showthread.php?23343-Sortierung-mit-list-gt-sorting-gt-mode-1
+     * Return the paste button
+     * @param object
+     * @param array
+     * @param string
+     * @param boolean
+     * @param array
+     * @return string
+     */
+    public function pasteTag(DataContainer $dc, $row, $table, $cr, $arrClipboard = false)
+    {
+        $this->import('BackendUser', 'User');
+
+        $imagePasteAfter = $this->generateImage('pasteafter.gif', sprintf($GLOBALS['TL_LANG'][$dc->table]['pasteafter'][1], $row['id']));
+        $imagePasteInto = $this->generateImage('pasteinto.gif', sprintf($GLOBALS['TL_LANG'][$dc->table]['pasteinto'][1], $row['id']));
+
+        if ($row['id'] == 0) {
+            return $cr ? Image::getHtml('pasteinto_.gif').' ' : '<a href="'.$this->addToUrl('act='.$arrClipboard['mode'].'&mode=2&pid='.$row['id'].'&id='.$arrClipboard['id']).'" title="'.StringUtil::specialchars(sprintf($GLOBALS['TL_LANG'][$dc->table]['pasteinto'][1], $row['id'])).'" onclick="Backend.getScrollOffset();">'.$imagePasteInto.'</a> ';
+        }
+
+        return (($arrClipboard['mode'] == 'cut' && $arrClipboard['id'] == $row['id']) || $cr) ? Image::getHtml('pasteafter_.gif').' ' : '<a href="'.$this->addToUrl('act='.$arrClipboard['mode'].'&mode=1&pid='.$row['id'].'&id='.$arrClipboard['id']).'" title="'.StringUtil::specialchars(sprintf($GLOBALS['TL_LANG'][$dc->table]['pasteafter'][1], $row['id'])).'" onclick="Backend.getScrollOffset();">'.$imagePasteAfter.'</a> ';
+    }
+
+}
