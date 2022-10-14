@@ -1,7 +1,7 @@
 {
   "name": "markocupic/gmk-referenzen-bundle",
   "type": "contao-bundle",
-  "description": "Contao 4 Gmk Referenzen Bundle",
+  "description": "Contao 4 GMK Referenzen Bundle",
   "license": "LGPL-3.0+",
   "authors": [
     {
@@ -11,8 +11,8 @@
   ],
   "version": "1.0.0",
   "require": {
-    "php": "^7.0",
-    "contao/core-bundle": "^4.9"
+    "php": "^7.4 || ^8.0",
+    "contao/core-bundle": "^4.13"
   },
   "autoload": {
     "psr-4": {

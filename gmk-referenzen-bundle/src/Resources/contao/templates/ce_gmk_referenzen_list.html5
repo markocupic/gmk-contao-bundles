@@ -1,32 +1,32 @@
 <?php $this->extend('block_searchable'); ?>
 <?php $this->block('content'); ?>
 <div class="row">
-<ul class="gmk_ref rotating-boxes">
+  <ul class="gmk_ref rotating-boxes">
     <?php foreach($this->items as $item): ?>
     <li style="height:300px;" class="col-xl-3 col-lg-4 col-md-6 col-sm-12 item <?= $item['filterClasses'] ?>">
-        <div class="gmk_ref_box rotating-boxes-item">
-            <div class="gmk_ref_front rotating-boxes-item-cover">
-                <!--<h4><?= $item['name'] ?></h4>-->
-                <img src="<?= $item['src'] ?>" alt="<?= $item['alt'] ?>">
-                <?php if($item['hasCase']): ?>
-                <a href="<?= $item['jumpTo'] ?>">Zum Case<i class="btr bt-angle-right"></i></a>
-                <?php endif; ?>
-            </div>
-            <div class="rotating-boxes-item-content gmk_ref_back">
-                <h4><?= $item['name'] ?></h4>
-                <h5>Branche(n):</h5>
-                <p class="gmk_ref_branche"><?= $item['strBranchen'] ?></p>
-                <h5>Leistungsfelde(r):</h5>
-                <p class="gmk_ref_leistung"><?= $item['strLeistungsfelder'] ?></p>
-                <?php if($item['hasCase']): ?>
-                    <a href="<?= $item['jumpTo'] ?>">Zum Case<i class="btr bt-angle-right"></i></a>
-                <?php endif; ?>
-            </div>
-        </div>    
+      <div class="gmk_ref_box rotating-boxes-item">
+        <div class="gmk_ref_front rotating-boxes-item-cover">
+          <!--<h4><?= $item['name'] ?></h4>-->
+          <img src="<?= $item['src'] ?>" alt="<?= $item['alt'] ?>">
+          <?php if($item['hasCase']): ?>
+          <a href="<?= $item['jumpTo'] ?>">Zum Case<i class="btr bt-angle-right"></i></a>
+          <?php endif; ?>
+        </div>
+        <div class="rotating-boxes-item-content gmk_ref_back">
+          <h4><?= $item['name'] ?></h4>
+          <h5>Branche(n):</h5>
+          <p class="gmk_ref_branche"><?= $item['strBranchen'] ?></p>
+          <h5>Leistungsfelde(r):</h5>
+          <p class="gmk_ref_leistung"><?= $item['strLeistungsfelder'] ?></p>
+          <?php if($item['hasCase']): ?>
+          <a href="<?= $item['jumpTo'] ?>">Zum Case<i class="btr bt-angle-right"></i></a>
+          <?php endif; ?>
+        </div>
+      </div>
     </li>
     <?php endforeach; ?>
-</ul>
-</div> 
+  </ul>
+</div>
 <?php $this->endblock(); ?>
 
 

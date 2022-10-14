@@ -1,41 +1,35 @@
 <?php
 
-/**
- * Contao Open Source CMS
+declare(strict_types=1);
+
+/*
+ * This file is part of GMK Referenzen Bundle.
  *
- * Copyright (c) 2005-2016 Leo Feyer
- *
- * @package   FondspolicenVergleich
- * @author    Marko Cupic
- * @license   SHAREWARE
- * @copyright Marko Cupic 2016
+ * (c) Marko Cupic 2022 <m.cupic@gmx.ch>
+ * @license LGPL-3.0+
+ * For the full copyright and license information,
+ * please view the LICENSE file that was distributed with this source code.
+ * @link https://github.com/markocupic/gmk-referenzen-bundle
  */
 
+use Contao\Environment;
 
-/**
- * BACK END MODULES
- *
- * Back end modules are stored in a global array called "BE_MOD". You can add
- * your own modules by adding them to the array.
+/*
+ * Backend modules
  */
-$GLOBALS['BE_MOD']['content']['referenzen'] = array(
-    'tables' => array('tl_gmk_referenzen'),
+$GLOBALS['BE_MOD']['content']['referenzen'] = [
+    'tables' => ['tl_gmk_referenzen'],
     'icon' => 'bundles/markocupicgmkreferenzen/images/catalog16.png',
-);
+];
 
-
-/**
+/*
  * Content Elements
  */
-$GLOBALS['TL_CTE']['gmk_referenzen'] = array(
+$GLOBALS['TL_CTE']['gmk_referenzen'] = [
     'gmkReferenzenList' => 'Markocupic\Gmk\GmkReferenzenList',
     'gmkReferenzenListInfiniteScroll' => 'Markocupic\Gmk\GmkReferenzenListInfiniteScroll',
-);
+];
 
-
-if (TL_MODE == 'FE' && !\Environment::get('isAjaxRequest'))
-{
-
+if (TL_MODE === 'FE' && !Environment::get('isAjaxRequest')) {
     $GLOBALS['TL_JAVASCRIPT'][] = 'bundles/markocupicgmkreferenzen/js/referenzen_infinite_scroll.js|static';
-
 }

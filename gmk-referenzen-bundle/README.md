@@ -19,7 +19,7 @@ Erstellen der globale ContaoManagerPlugin Klasse, welche in einem Symfony App nu
  * @package    Calendar Event Booking Bundle
  * @license    LGPL-3.0+
  * @see        https://github.com/markocupic/calendar-event-booking-bundle
- * @see        https://github.com/markocupic/employee-bundle
+ * @see        https://github.com/markocupic/gmk-referenzen-bundle
  *
  */
 
@@ -46,7 +46,7 @@ class ContaoManagerPlugin implements BundlePluginInterface
                   'Contao\CoreBundle\ContaoCoreBundle',
                   'Contao\CalendarBundle\ContaoCalendarBundle'
                 ]),
-            // 2. lokales Plugin in ROOT  src/markocupic/employee-bundle
+            // 2. lokales Plugin in ROOT  src/markocupic/gmk-referenzen-bundle
             BundleConfig::create('Markocupic\EmployeeBundle\MarkocupicEmployeeBundle')
                 ->setLoadAfter(['Contao\CoreBundle\ContaoCoreBundle'])
             // Weitere lokale Plugins
